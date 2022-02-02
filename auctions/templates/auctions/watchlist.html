@@ -1,0 +1,37 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+
+<div class="container-md">
+
+
+
+{% for card in cards%}
+
+<br>
+<div class="card mb-2 w-50 mx-auto ">
+  {% if card.title.image %}
+    <img src="{{card.title.image.url}}" alt="{{ card.title }}  class="card-img-center"   ">
+  {% else %}
+   {% endif %}
+  <div class="card-body">
+    <h5 class="card-title">  <b>{{card.title.title}}</b> </h5>
+    <p class="card-text">{{card.title.description}}
+    </p>
+    <p class="card-title">
+         <b><p class="card-price">   <b> Потоцна ціна:{% if card.title.now_price %}
+      {{card.title.now_price}}
+      {% else %}
+      {{card.title.price}}
+      {% endif %}$</b> 
+    </p>
+    <p class="card-text"><small class="text-muted"> Лот выставлен: {{card.title.pub_date}}
+
+    </small></p>
+    <a href="{% url 'listing' card.title.title card.title.id %}" class="btn btn-primary" > Детальніше
+    </a>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock%}

@@ -1,0 +1,27 @@
+
+      <div class="col mb-3">
+        <div class="card h-100 shadow-sm p-3 mb-5 bg-light rounded ">
+          {% if card.image%}
+          <img src="{{card.image.url}}" alt="{{ card.title }} class="card-img-top"">
+         {% endif %}
+          <div class="card-body ">
+            <h5 class="card-title">  
+              <b>{{ card.title}}</b>  
+              {% if not card.status_lot %}
+              <span class="badge bg-danger">Лот закритий</span></h5>
+              {% endif %}
+      </h5>
+            <p class="card-text">{{card.description}}</p>
+            <p class="card-price">   <b> Потоцна ціна:{% if card.now_price %}
+              {{card.now_price}}
+              {% else %}
+              {{card.price}}
+              {% endif %}$</b> </p>
+            <a href="{% url 'listing' card.title card.id %}" class="btn btn-primary" > Детальніше
+            </a>
+            <p class="card-text">
+              <small class="text-muted">Створено: {{ card.pub_date}}</small>
+              </p>           
+          </div>
+        </div>
+      </div>

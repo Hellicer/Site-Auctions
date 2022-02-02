@@ -1,0 +1,79 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<br>
+<div class="d-flex justify-content-center row">
+
+  <div class="userpage__button all__lot   px-2 ">
+    <form action="{% url 'account' user.username %}" method="post">
+      {% csrf_token %}
+      {% if check_card_author == 1 %}
+      <button type="submit" name="button" class="  btn btn-primary  btn-xs " value="card_author"> <b> Все лоты {{card_author.count}}
+      </b></button>
+      {% else %}
+      <button type="submit" name="button" class="  btn btn-outline-primary  btn-xs " value="card_author"> <b> Все лоты {{card_author.count}}
+      </b></button>
+
+      {% endif %}
+    </form>
+  </div>
+  
+  <div class="userpage__button open__lot px-2 ">
+    <form action="{% url 'account' user.username %}" method="post">
+      {% csrf_token %}
+      {% if check_card_open == 1 %}   <button type="submit" name="button" class="btn btn-primary  btn-xs " value="card_open"> <b> Открытые лоты
+        {{card_open.count}} </b></button>
+
+      {% else %}       <button type="submit" name="button" class="btn btn-outline-primary  btn-xs " value="card_open"> <b> Открытые лоты
+        {{card_open.count}} </b></button>  {% endif %}
+
+        {% if check_card_author == 1 %} 
+        {% else %} 
+        {% endif %}
+      </form>
+    </div>
+
+    <div class="userpage__button close__lot px-2 ">
+      <form action="{% url 'account' user.username %}" method="post">
+        {% csrf_token %}
+        {% if check_card_archive == 1 %}
+        <button type="submit" name="button" class="btn btn-primary  btn-xs " value="card_archive"> <b> Закрытые лоты
+          {{card_archive.count}} </b></button>
+        {% else %}   <button type="submit" name="button" class="btn btn-outline-primary  btn-xs " value="card_archive"> <b> Закрытые лоты
+          {{card_archive.count}} </b></button>
+        {% endif %} 
+        </form>
+      </div>
+
+      <div class=" userpage__button winner__lot px-2 ">
+        <form action="{% url 'account' user.username %}" method="post">
+          {% csrf_token %}
+
+        {% if check_checked == 1 %} 
+        <button type="submit" name="button" class="btn btn-primary  btn-xs " value="winner_lot"> <b> Выигранные лоты
+          {{winner_card.count}} </b></button>
+        {% else %} 
+
+        <button type="submit" name="button" class="btn btn-outline-primary  btn-xs " value="winner_lot"> <b> Выигранные лоты
+          {{winner_card.count}} </b></button>
+          {% endif %}
+          
+        </form>
+      </div>
+
+    </div>
+    <br>
+
+    {% for card in cards%}
+    <div class=" mb-2  w-50 mx-auto   ">
+      {% include "auctions/layout_card.html" %}
+    </div>
+      {% empty %}
+      <div class=" mb-2  w-50 mx-auto">
+        <h3>
+          Вы ещё не создали ни одного лота.
+        </h3>
+        {% endfor %}
+        <br>
+        <a href="{% url 'index' %}">Повернутися на головну</a>
+      </div>
+  {% endblock %}

@@ -1,0 +1,24 @@
+{% extends "auctions/layout.html" %}
+{% block body%}
+
+
+  <div class="vstack gap-2 col-md-5 mx-auto ">
+    <br><h1>
+   Усі Категорії товарів:
+  </h1> <br>
+</h1>
+</div>
+
+<div class="container ">
+
+    {% for category in categorys%}
+    <div class="list-group mb-1 shadow-sm ">
+      <a href="{% url 'listlots' category%}"  class="list-group-item list-group-item-action">{{ category }}
+      </a>
+    </div>
+  {% endfor %}
+<br>
+<a href="{% url 'index' %} class="" ">Повернутися на головну</a>
+  </div>
+
+{% endblock %}

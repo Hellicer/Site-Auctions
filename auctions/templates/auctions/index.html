@@ -1,0 +1,18 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+<div class="container-fluid ">
+  <h1 class="display-6 text-center">
+    <span class="badge bg-light text-dark">Активні лоти: {{cards.count}}</span>
+</h1>
+  <div class="row row-cols-1 row-cols-md-3   g-4">
+    {% for card in cards%}
+    {% if card.status_lot %}
+    {% include "auctions/layout_card.html" %}   
+    {% else %}
+    Активних лотів нема
+    {% endif %}
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

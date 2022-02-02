@@ -1,0 +1,166 @@
+
+<ul>
+
+  <br>
+  <div class="d-flex ">
+    <div class="p-2 bd-highlight">
+      <h1>Товар: {{ card.title}}</h1>
+      {% if card.status_lot != True  %}<span class="badge rounded-pill bg-danger">Lot is close</span>{% endif%}
+    </div>
+    <div class="p-2 bd-highlight"> {% if user.is_authenticated  %}
+      <form action="{% url 'listing' card.title  card.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" name="button" class="btn btn-link" value="Watchlist">
+          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+          width="32" height="32"
+          viewBox="0 0 171 171"
+          style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,171.98863v-171.98863h171.98863v171.98863z" fill="none"></path><g fill="#4081c6"><path d="M85.50076,22.54127c-18.95918,0 -40.39747,7.01112 -57.34984,18.75866c-16.11638,11.16445 -26.11607,25.1487 -28.12646,39.04113c-0.27652,1.91202 1.89627,3.18943 3.42839,2.01218c20.94739,-16.09706 53.29795,-26.90169 82.04722,-26.90169c28.74927,0 61.10052,10.80463 82.04862,26.90169c1.53176,1.17726 3.70421,-0.10016 3.42769,-2.01218c-2.01039,-13.89243 -12.00975,-27.87667 -28.12576,-39.04113c-16.95237,-11.74754 -38.39066,-18.75866 -57.34985,-18.75866zM85.84381,61.19045c-11.28921,-0.03081 -22.69294,1.51934 -34.6891,4.74329c-0.79199,0.21284 -1.45092,0.76147 -1.81795,1.49516c-2.78879,5.57722 -4.25911,11.78817 -4.25911,18.07117c0,22.2892 18.1332,40.4224 40.4224,40.4224c22.2892,0 40.4224,-18.1332 40.4224,-40.4224c0,-6.28264 -1.47032,-12.49359 -4.25911,-18.07117c-0.36702,-0.73368 -1.02629,-1.28196 -1.81864,-1.49516c-11.5372,-3.10036 -22.7117,-4.71248 -34.0009,-4.74329zM85.50006,68.6872c9.27068,0 16.81286,7.54218 16.81286,16.81286c0,9.27068 -7.54218,16.81286 -16.81286,16.81286c-9.27068,0 -16.81286,-7.54218 -16.81286,-16.81286c0,-9.27068 7.54218,-16.81286 16.81286,-16.81286zM39.0062,69.86167c-0.20248,0.0132 -0.40936,0.05619 -0.61693,0.13275c-21.65139,7.98253 -33.18215,18.07172 -36.82983,21.40174c-0.76552,0.69899 -1.09875,1.75729 -0.85657,2.76535c3.05922,12.72054 12.68531,25.31253 27.44735,35.53868c16.95237,11.74754 38.39066,18.75866 57.34984,18.75866c35.0523,0 77.52007,-24.03059 84.7979,-54.29874c0.24253,-1.00806 -0.09103,-2.06672 -0.85727,-2.76535c-3.65161,-3.33109 -15.21674,-13.42997 -36.82913,-21.40034c-1.66054,-0.61242 -3.28937,0.92712 -2.79679,2.62701c8.57599,29.58562 -13.71209,59.02456 -44.31471,59.02456c-30.67917,0 -52.86995,-29.51082 -44.31471,-59.02526c0.43101,-1.4874 -0.76179,-2.85146 -2.17916,-2.75906zM85.50006,74.41073c-6.12447,0 -11.08933,4.96486 -11.08933,11.08933c0,6.12447 4.96486,11.08933 11.08933,11.08933c6.12447,0 11.08933,-4.96486 11.08933,-11.08933c0,-6.12447 -4.96486,-11.08933 -11.08933,-11.08933z"></path></g></g></svg>
+        </button>
+      </form>
+      {% endif %}</div>
+
+  </div>
+
+
+  <div class="d-flex content-imagerite">
+  {% if card.image%}
+  <img src="{{card.image.url}}" alt="{{ card.title }}" style="max-height:500px">
+  {% else %} {% endif %}
+
+
+  <div class="page-rite">
+ 
+    <div class=" last-rites">
+    {% if rate %}
+    <div class="alert alert-light text-dark" role="alert">
+      Останні ставки:<br>
+      {% for item_rate in rate%}
+      <h6>
+
+        <span class="badge bg-secondary">{{item_rate.price}}$</span>
+        - <b>{{item_rate.user}}</b>  <i>{{item_rate.pub_date|date:" G:i d M" }}</i> <br>
+      
+        {% endfor %}
+        <br>
+        Усього: {{allrate|length }} ставки(ок).
+      </h6>
+    </div>
+      {% else %}
+      <div class="alert alert-secondary" role="alert">
+        Поки що ніхто не зробив ставку!
+      </div>
+
+      
+           {% endif %}
+    </div>
+   <div class="rate-bid">
+
+
+    {% if rate %}
+    <h2> ${{rate_last}}</h2>
+    {% else %}<h2> Ціна: {{card.price}}$</h2>
+    {% endif %}
+
+    {% if user.is_authenticated  %}
+    <form action="{% url 'listing' card.title card.id %}" method="post">
+      {% csrf_token %}
+      {{error_price|safe}}
+      {{price.price}}
+      {% if card.status_lot %}
+      {% if user.username == card.author %}
+      Автор не може робити ставку на товар
+      {% else %}
+      <button type="submit" name="button" class="btn btn-info" value="Bid">Зробити ставку</button> 
+      {% endif %}
+      {% else %}
+      <button type="submit" name="button" class="btn btn-info" value="Bid" disabled>Зробити ставку</button>
+      {% endif %}
+    </form>
+    <h1>
+      {% if card.status_lot != True %}
+      <span class="badge rounded-pill bg-success">Лот купил <b>{{card.winner}}</b></span>
+      {% endif %}
+    </h1>
+    <form action="{% url 'listing' card.title card.id %}" class="form__close-page" method="post">
+      {% csrf_token %}
+      {% if card.status_lot and user.username == card_user%}
+      <button type="submit" name="button" class="btn btn-danger" value="Close">Закрити лот</button>
+      {% elif user.username != card_user %}
+      {% else %}
+      <button type="submit" name="button" class="btn btn-danger" disabled value="Close">Закрити лот</button>
+      <div>
+      </div>
+      {% endif %}
+    </form>
+    {% else %}
+    Щоб зробти ставку
+    <a href="{% url 'register' %}">зареєструйтесь,
+    </a>
+    {% endif %}
+    </div>
+  </div>
+</div>
+  <h4>  <br> {{card.description}}<br></h3>
+
+
+    
+    </li>
+    <h2>
+      <b>Деталі:</b>
+    </h2>
+    <li>Категорія: <i>
+        {%  for category in categorys%}
+        <a href="category/{{category}}">{{category}}</a>
+        {% empty%}
+        No category
+        {%endfor%}
+      </i>
+    <li>Створено: {{ card.pub_date|date:"G:i  d.m.Y "}}
+      </h6>
+    </li>
+    <li>Користувач: <a href="#">
+        {{card.author}}</li>
+    </a>
+    <h2> Комментарии:<br></h2>
+    <h4>
+      {% for comment in comments %}
+      <h6>
+        <li>
+          <b>
+            {{comment.text}}:
+          </b>
+          -{{ comment.user }}
+          {{comment.pub_date|date:" P D.m.Y "  }}
+      </h6>
+      {% empty %}
+      <h6>
+        Залиште перший комментар!
+      </h6>
+      {% endfor %}
+    </h4>
+    </li>
+    <div>
+      {% if user.is_authenticated %}
+      <div>
+        
+        <form action="{% url 'listing' card.title card.id %}" method="post">
+          {% csrf_token %}
+          {{ comment.text }}
+          <br>
+          {% if card.status_lot %}
+          <button type="submit" name="button" class="btn btn-danger" value="Send_comment">Отправити</button>
+          {%else%}
+          <button type="submit" name="button" class="btn btn-danger" value="Send_comment" disabled>Отправити</button>
+          {% endif%}
+        </form>
+      </div>
+      {% else %}
+      <div>
+        <b>
+          <a href="{% url 'register' %}"> Зареєструйтесь, щоб залишити коментар.
+          </a>
+        </b>
+      </div>
+
+      {% endif %}
+</ul>

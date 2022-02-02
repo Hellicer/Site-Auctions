@@ -1,0 +1,10 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+{% for card in cards%}
+<div class=" mb-2 w-50 mx-auto">
+  <br>
+  {% include "auctions/layout_card.html" %} 
+
+</div>
+{% endfor %}
+{% endblock%}

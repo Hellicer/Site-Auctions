@@ -1,0 +1,32 @@
+<form>
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Название
+       товара:</label>
+       {{form.title}} 
+      </div>
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Описание:</label>
+    {{form.description}}
+
+  </div>
+
+  <div class="col-md-2">
+    <label for="inputZip" class="form-label">Начальная ставка:</label>
+    {{form.price}}$
+  </div>
+  
+  <div class="mb-3">
+    <label for="formFile" class="form-label">Выберете фото для загрузки:</label>
+    {{form.image}}
+    <input class="form-control" type="file" id="formFile">
+  </div>
+  
+  <div class="col-md-4">
+    <label for="inputState" class="form-label">Выберете категорию товара:
+    </label>
+    {{form.category}}
+
+  </div>
+  <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
